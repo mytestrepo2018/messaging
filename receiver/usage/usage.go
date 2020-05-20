@@ -9,7 +9,8 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/mytestrepo2018/messaging/receiver"
+	receiver "github.com/mytestrepo2018/messaging/receiver"
+        option "github.com/mytestrepo2018/messaging/option"
 )
 
 var (
@@ -54,7 +55,7 @@ func init() {
 				Msg("Failed to get a receiver")
 		}
 
-		err = rcvr.Init(argMessagingTopic, receiver.NatsIOConfig(argMessagingConfig, "A test NATS receiver", 5, 10))
+		err = rcvr.Init(argMessagingTopic, option.NatsIOConfig(argMessagingConfig, "A test NATS receiver", 5, 10))
 		if err != nil {
 			log.Fatal().
 				Err(err).

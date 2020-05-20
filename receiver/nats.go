@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/nats-io/nats.go"
+        option "github.com/mytestrepo2018/messaging/option" 
+
 )
 
 type natsReceiver struct {
@@ -17,8 +19,8 @@ func (n *natsReceiver) Name() string {
 	return "nats"
 }
 
-func (n *natsReceiver) Init(topic string, options ...Option) error {
-	c := &config{}
+func (n *natsReceiver) Init(topic string, options ...option.Option) error {
+	c := &option.Config{}
 	for _, o := range options {
 		o(c)
 	}
@@ -26,7 +28,7 @@ func (n *natsReceiver) Init(topic string, options ...Option) error {
 	opts := []nats.Option{}
 	opts = convertToNatsConfig(*c, opts)
 
-	nc, err := nats.Connect(c.serverURL, opts...)
+	nc, err := nats.Connect(c.ServerURL, opts...)
 	if err != nil {
 		return err
 	}
@@ -60,12 +62,12 @@ func (n *natsReceiver) Close() {
 	}
 }
 
-func convertToNatsConfig(c config, opts []nats.Option) []nats.Option {
-	reconnectDelay := time.Second * time.Duration(c.reconnectWait)
+func convertToNatsConfig(c option.Config, opts []nats.Option) []nats.Option {
+	reconnectDelay := time.Second * time.Duration(c.ReconnectWait)
 
-	opts = append(opts, nats.Name(c.name))
+	opts = append(opts, nats.Name(c.Name))
 	opts = append(opts, nats.ReconnectWait(reconnectDelay))
-	opts = append(opts, nats.MaxReconnects(c.retry))
+	opts = append(opts, nats.MaxReconnects(c.Retry))
 
 	return opts
 }
