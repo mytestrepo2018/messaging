@@ -9,8 +9,7 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-
-	"github.com/mytestrepo2018/messaging"
+	"github.com/mytestrepo2018/messaging/receiver"
 )
 
 var (
@@ -18,7 +17,7 @@ var (
 	argMessagingConfig string
 	argMessagingTopic  string
 
-	rcvr mymsg.Receiver
+	rcvr receiver.Receiver
 )
 
 // Command line
@@ -48,14 +47,14 @@ func init() {
 func init() {
 	if argMessagingConfig != "" {
 		var err error
-		rcvr, err = mymsg.GetReceiver(argMessaging)
+		rcvr, err = receiver.GetReceiver(argMessaging)
 		if err != nil {
 			log.Fatal().
 				Err(err).
 				Msg("Failed to get a receiver")
 		}
 
-		err = rcvr.Init(argMessagingTopic, mymsg.NatsIOConfig(argMessagingConfig, "A test NATS receiver", 5, 10))
+		err = rcvr.Init(argMessagingTopic, receiver.NatsIOConfig(argMessagingConfig, "A test NATS receiver", 5, 10))
 		if err != nil {
 			log.Fatal().
 				Err(err).
