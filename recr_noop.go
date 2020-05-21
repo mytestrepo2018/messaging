@@ -1,14 +1,12 @@
 package messaging
 
-import option "github.com/mytestrepo2018/messaging/option"
-
 type noopReceiver struct{}
 
 func (noopReceiver) Name() string {
 	return "noop"
 }
 
-func (noopReceiver) Init(string, ...option.Option) error {
+func (noopReceiver) Init(string, ...Option) error {
 	return nil
 }
 

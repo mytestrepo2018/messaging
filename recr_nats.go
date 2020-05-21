@@ -6,8 +6,6 @@ import (
 	"time"
 
 	"github.com/nats-io/nats.go"
-        option "github.com/mytestrepo2018/messaging/option" 
-
 )
 
 type natsReceiver struct {
@@ -19,8 +17,8 @@ func (n *natsReceiver) Name() string {
 	return "nats"
 }
 
-func (n *natsReceiver) Init(topic string, options ...option.Option) error {
-	c := &option.Config{}
+func (n *natsReceiver) Init(topic string, options ...Option) error {
+	c := &Config{}
 	for _, o := range options {
 		o(c)
 	}
@@ -62,7 +60,7 @@ func (n *natsReceiver) Close() {
 	}
 }
 
-func convertToNatsConfig(c option.Config, opts []nats.Option) []nats.Option {
+func convertToNatsConfig(c Config, opts []nats.Option) []nats.Option {
 	reconnectDelay := time.Second * time.Duration(c.ReconnectWait)
 
 	opts = append(opts, nats.Name(c.Name))

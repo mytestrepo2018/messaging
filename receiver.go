@@ -2,13 +2,12 @@ package messaging
 
 import (
 	"fmt"
-        option "github.com/mytestrepo2018/messaging/option" 
 )
 
 // Receiver is a message receiver!
 type Receiver interface {
 	Name() string
-	Init(topic string, options ...option.Option) error
+	Init(topic string, options ...Option) error
 	Receive() ([]byte, error)
 	Close()
 }
